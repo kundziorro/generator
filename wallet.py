@@ -3,7 +3,7 @@ from requester import ExchangeRateRequester
 
 Transaction = namedtuple("Transaction", ["date", "value"])
 
-
+dupatest
 class Wallet:
     def __init__(self):
         self.transactions = []
