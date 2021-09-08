@@ -1,0 +1,28 @@
+from collections import namedtuple
+from requester import ExchangeRateRequester
+
+Transaction = namedtuple("Transaction", ["date", "value"])
+
+
+class Wallet:
+    def __init__(self):
+        self.transactions = []
+        self.exchange_rate_requester = ExchangeRateRequester()
+
+    def show_transactions(self):
+        pass
+
+    def add_buy_transaction(self, value_euro, date):
+        pass
+
+    def add_sell_transaction(self, value_euro, date):
+        pass
+
+    def get_value_in_pln(self):
+        pass
+
+    def get_paid_value_in_pln(self):
+        pass
+
+    def get_profit_in_pln(self):
+        pass
