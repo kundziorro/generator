@@ -17,7 +17,8 @@ class Wallet:
         self.transactions.append(buy)
 
     def add_sell_transaction(self, value_euro, date):
-        pass
+        sell = Transaction(date, value_euro)
+        self.transactions.append(sell)
 
     def get_value_in_pln(self):
         pass
