@@ -21,7 +21,12 @@ class Wallet:
         self.transactions.append(sell)
 
     def get_value_in_pln(self):
-        pass
+        todays_rate = self.exchange_rate_requester.get_todays_rate()
+        wallet_value = 0
+        for _ in self.transactions:
+            wallet_value += Transaction[1]
+        value_in_pln = wallet_value * todays_rate
+        return value_in_pln
 
     def get_paid_value_in_pln(self):
         pass
