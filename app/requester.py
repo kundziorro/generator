@@ -39,7 +39,6 @@ class ExchangeRateRequester:
             historical_bids.append(historical_rate)
         return historical_bids
 
-
     def get_todays_rate(
         self,
     ):  # ->float:
@@ -47,10 +46,9 @@ class ExchangeRateRequester:
         todays_bid = self.extract_todays_bid(rest_response)
         return todays_bid
 
-    def get_historical_bids(self, start_date, end_date): # ->dict:
+    def get_historical_bids(self, start_date, end_date):  # ->dict:
         rest_response = self.get_rate(start_date=start_date, end_date=end_date)
         historocal_bids = self.extract_historical_bids(rest_response)
-        
         return historocal_bids
 
 if __name__ == "__main__":
