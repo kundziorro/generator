@@ -3,7 +3,7 @@ from requester import ExchangeRateRequester
 
 Transaction = namedtuple("Transaction", ["date", "value"])
 
-dupatest
+
 class Wallet:
     def __init__(self):
         self.transactions = []
@@ -13,7 +13,8 @@ class Wallet:
         pass
 
     def add_buy_transaction(self, value_euro, date):
-        pass
+        buy = Transaction(date, value_euro)
+        self.transactions.append(buy)
 
     def add_sell_transaction(self, value_euro, date):
         pass
