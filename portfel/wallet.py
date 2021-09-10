@@ -2,7 +2,7 @@ from collections import namedtuple
 
 from portfel.requester import ExchangeRateRequester
 
-Transaction = namedtuple("Transaction", ["date", "value"])
+Transaction = namedtuple("Transaction", ["date", "value", "rate"])
 
 
 class Wallet:
@@ -12,18 +12,16 @@ class Wallet:
 
     def show_transactions(self):
         for transaction in self.transactions:
-            if transaction.value < 0:
-                print(f"In {transaction.date} you sold {transaction.value} EUR")
-            else:
-                print(f"In {transaction.date} you bought {transaction.value} EUR")
+            sign = "+" if transaction.value >= 0 else ""
+            print(f"In {transaction.date} {sign}{transaction.value} EUR by rate {transaction.rate}")
 
-    def add_buy_transaction(self, value_euro, date):
-        buy = Transaction(date, value_euro)
+    def add_buy_transaction(self, value_euro, date, rate):
+        self.exchange_rate_requester.get_todays_rate()
+        buy = Transaction(date, value_euro, rate)
         self.transactions.append(buy)
 
-    def add_sell_transaction(self, value_euro, date):
-        sell = Transaction(date, value_euro * (-1))
-        sell = sell
+    def add_sell_transaction(self, value_euro, date, rate):
+        sell = Transaction(date, value_euro * (-1), rate)
         self.transactions.append(sell)
 
     def get_value_in_pln(self):
