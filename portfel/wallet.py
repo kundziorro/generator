@@ -39,5 +39,5 @@ class Wallet:
         return transactions_value_pln
 
     def get_profit_in_pln(self) -> float:
-        profit = self.get_value_in_pln - self.get_paid_value_in_pln
+        profit = self.get_value_in_pln() - self.get_paid_value_in_pln()
         return profit
