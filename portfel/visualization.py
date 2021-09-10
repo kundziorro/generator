@@ -37,5 +37,8 @@ class Grapher:
         plt.title("Historical portfolio value")
         df.show()
 
-    def plot_profit(self) -> None:
-        pass
+    def plot_profit(self, profit) -> None:
+        profit.plot.bar()
+        plt.ylabel("value")
+        plt.title("Portfolio profit")
+        profit.show()
