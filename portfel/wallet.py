@@ -11,14 +11,18 @@ class Wallet:
         self.exchange_rate_requester = ExchangeRateRequester()
 
     def show_transactions(self):
-        pass
+        for transaction in self.transactions:
+            if transaction.value < 0:
+                print(f"In {transaction.date} you sold {transaction.value} EUR")
+            else:
+                print(f"In {transaction.date} you bought {transaction.value} EUR")
 
     def add_buy_transaction(self, value_euro, date):
         buy = Transaction(date, value_euro)
         self.transactions.append(buy)
 
     def add_sell_transaction(self, value_euro, date):
-        sell = Transaction(date, value_euro*(-1))
+        sell = Transaction(date, value_euro * (-1))
         sell = sell
         self.transactions.append(sell)
 
