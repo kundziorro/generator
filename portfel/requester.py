@@ -3,6 +3,7 @@ import requests
 import json
 import typing as T
 
+
 class ExchangeRateRequester:
     def __init__(self):
         self.api_url = "http://api.nbp.pl/api/exchangerates/rates/c/{currency_code}/{start_date}/{end_date}/"
@@ -14,9 +15,7 @@ class ExchangeRateRequester:
         end_date=str(datetime.date.today()),
     ):  # ->list:
 
-        api_url = self.api_url.format(
-            currency_code=currency_code, start_date=start_date, end_date=end_date
-        )
+        api_url = self.api_url.format(currency_code=currency_code, start_date=start_date, end_date=end_date)
 
         response = requests.get(api_url).text
         data = json.loads(response)
@@ -50,6 +49,7 @@ class ExchangeRateRequester:
         rest_response = self.get_rate(start_date=start_date, end_date=end_date)
         historocal_bids = self.extract_historical_bids(rest_response)
         return historocal_bids
+
 
 if __name__ == "__main__":
     exchange_rate_requester = ExchangeRateRequester()

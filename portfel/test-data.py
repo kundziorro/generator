@@ -11,10 +11,6 @@ with open("d:/Python/portfolio/wallet.txt") as file:
     a.update(position)
 
     result = ast.literal_eval(text[2])
-    b.update(result)    
+    b.update(result)
 
     c = int(text[3])
-
-
-
-

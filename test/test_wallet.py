@@ -2,9 +2,7 @@ from portfel import wallet
 
 
 def test_get_value_in_pln(mocker):
-    mocker.patch(
-        "portfel.requester.ExchangeRateRequester.get_todays_rate", return_value=4.50
-    )
+    mocker.patch("portfel.requester.ExchangeRateRequester.get_todays_rate", return_value=4.50)
 
     wallet_ = wallet.Wallet()
     result = wallet_.get_value_in_pln()
@@ -13,9 +11,7 @@ def test_get_value_in_pln(mocker):
 
 
 def test_get_value_in_pln_2(mocker):
-    mocker.patch(
-        "portfel.requester.ExchangeRateRequester.get_todays_rate", return_value=4.50
-    )
+    mocker.patch("portfel.requester.ExchangeRateRequester.get_todays_rate", return_value=4.50)
     # pass
     wallet_ = wallet.Wallet()
     wallet_.add_buy_transaction(500, "2021-09-01", 4.20)
@@ -24,6 +20,7 @@ def test_get_value_in_pln_2(mocker):
     result = wallet_.get_value_in_pln()
 
     assert result == 700 * 4.5
+
 
 def test_add_buy_transaction():
     wallet_ = wallet.Wallet()
