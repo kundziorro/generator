@@ -13,7 +13,7 @@ class ExchangeRateRequester:
         currency_code="EUR",
         start_date=str(datetime.date.today()),
         end_date=str(datetime.date.today()),
-    ):  # ->list:
+    ) -> list:
 
         api_url = self.api_url.format(currency_code=currency_code, start_date=start_date, end_date=end_date)
 
@@ -22,13 +22,13 @@ class ExchangeRateRequester:
         return data
 
     @staticmethod
-    def extract_todays_bid(rest_response):
+    def extract_todays_bid(rest_response) -> float:
         todays_rates = rest_response["rates"][0]
         todays_bid = todays_rates["bid"]
         return todays_bid
 
     @staticmethod
-    def extract_historical_bids(rest_response):
+    def extract_historical_bids(rest_response) -> list:
         historical_rates = rest_response["rates"]
 
         historical_bids = []
@@ -38,9 +38,7 @@ class ExchangeRateRequester:
             historical_bids.append(historical_rate)
         return historical_bids
 
-    def get_todays_rate(
-        self,
-    ):  # ->float:
+    def get_todays_rate(self) -> float:
         rest_response = self.get_rate()
         todays_bid = self.extract_todays_bid(rest_response)
         return todays_bid
@@ -49,8 +47,3 @@ class ExchangeRateRequester:
         rest_response = self.get_rate(start_date=start_date, end_date=end_date)
         historocal_bids = self.extract_historical_bids(rest_response)
         return historocal_bids
-
-
-if __name__ == "__main__":
-    exchange_rate_requester = ExchangeRateRequester()
-    print(exchange_rate_requester.get_historical_bids("2021-09-01", "2021-09-07"))
