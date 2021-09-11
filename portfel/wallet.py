@@ -16,7 +16,7 @@ class Wallet:
             print(f"In {transaction.date} {sign}{transaction.value} EUR by rate {transaction.rate}")
 
     def add_buy_transaction(self, value_euro: float, date: str, rate: float) -> None:
-        self.exchange_rate_requester.get_todays_rate()
+        # self.exchange_rate_requester.get_todays_rate()
         buy = Transaction(date, value_euro, rate)
         self.transactions.append(buy)
 

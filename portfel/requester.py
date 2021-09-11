@@ -28,14 +28,15 @@ class ExchangeRateRequester:
         return todays_bid
 
     @staticmethod
-    def extract_historical_bids(rest_response) -> list:
+    def extract_historical_bids(rest_response) -> T.Dict[str, float]:
         historical_rates = rest_response["rates"]
 
-        historical_bids = []
+        historical_bids = {}
         for rate in historical_rates:
             # historical_date = historical_rates[rate]
             historical_rate = rate["bid"]
-            historical_bids.append(historical_rate)
+            historical_date = rate["effectiveDate"]
+            historical_bids[historical_date] = historical_rate
         return historical_bids
 
     def get_todays_rate(self) -> float:
