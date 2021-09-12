@@ -23,6 +23,7 @@ class Grapher:
         plt.xlabel("date")
         plt.ylabel("rate")
         plt.title("Historical rates")
+        plt.tight_layout()
         plt.show()
 
     def plot_portfolio_value_pln(self, transactions=DataFrame) -> None:
@@ -41,6 +42,7 @@ class Grapher:
         plt.xticks(rotation=55)
         plt.ylabel("value")
         plt.title("Historical portfolio value")
+        plt.tight_layout()
         plt.show()
 
     def plot_profit(self, transactions) -> None:
@@ -54,7 +56,7 @@ class Grapher:
 
             try:
                 if row.date == transactions[0].date:
-                    df.at[i, ["transaction_rate"]] = t[0].rate
+                    df.at[i, ["transaction_rate"]] = transactions[0].rate
                     transaction_rate = transactions[0].rate
                     portfolio_value += transactions.pop(0).value
                     df.at[i, ["portfolio_value"]] = portfolio_value
@@ -75,5 +77,6 @@ class Grapher:
         plt.xlabel("date")
         plt.xticks(rotation=45)
         plt.ylabel("profit")
-        plt.title("Historical portfolio profit")
+        plt.title("Historical portfolio profit [%]")
+        plt.tight_layout()
         plt.show()
