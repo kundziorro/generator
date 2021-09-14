@@ -39,4 +39,4 @@ Distributed under the MIT License.
 
 ## Contact
 
-You can reach me on LinkedIn or by email. 
+You can reach me on [LinkedIn](https://www.linkedin.com/in/mateusz-barańczyk-a4a74b207/) or by [email](mailto:mateusz.baranczyk@gmail.com). 
