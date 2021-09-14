@@ -1,6 +1,6 @@
 from collections import namedtuple
 
-from portfel.requester import ExchangeRateRequester
+from app.requester import ExchangeRateRequester
 
 Transaction = namedtuple("Transaction", ["date", "value", "rate"])
 

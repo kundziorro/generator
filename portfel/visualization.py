@@ -1,5 +1,5 @@
 from pandas.core.frame import DataFrame
-from portfel.requester import ExchangeRateRequester
+from app.requester import ExchangeRateRequester
 import pandas as pd
 import matplotlib.pyplot as plt
 
