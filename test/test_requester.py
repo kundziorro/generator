@@ -1,4 +1,4 @@
-from portfel import requester
+from app import requester
 
 
 def test_extract_todays_bid():
