@@ -4,13 +4,13 @@
 
 Here's the simple app that creates and tracks your currency wallet. The whole project is based on Python 3.8. I have created it to check my skills and use some features in real life, not only with tutorials on the internet ;)
 
-The application is using http://api.nbp.pl to check the actual currency exchange rate and it is only demonstration my skills. I have never planned to develop this project as a useful application. Please remember it during code review. 
+The application is using http://api.nbp.pl to check the actual currency exchange rate and it is only demonstration of my skills. I have never planned to develop this project as a useful application. Please remember it during code review. 
 
 I will appreciate any feedback regarding my code. 
 
 ## Getting Started
 
-I highly recommend using an app in Jupyterlab. To run code properly you will need also Pandas and Matplotlib libraries.   
+I highly recommend using an app in Jupyterlab. 
 
 ### Installation and usage
 
@@ -22,12 +22,9 @@ To use my code on your own, clone the repository from the following link.
 Install required libraries: 
 
    ```sh
-    pip install pandas
+    pip install -r requirements.txt
    ```
 
-  ```sh
-   pip install matplotlib
-   ```
 
 [Here](https://jupyter.org/install) you can find instructions on how to install and run Jupyterlab. It should be run on a directory with other files from this repo. 
 
