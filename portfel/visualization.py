@@ -17,39 +17,10 @@ class Grapher:
 
         return df
 
-    def plot_historical_rates(self, data_frame) -> None:
-        data_frame.plot(x="date", y="rate")
-        plt.grid()
-        plt.xlabel("date")
-        plt.xticks(rotation=45)
-        plt.ylabel("rate")
-        plt.title("Historical rates")
-        plt.tight_layout()
-        plt.show()
-
-    def plot_portfolio_value_pln(self, transactions=DataFrame) -> None:
-        if transactions.empty:
-            print("There are no transactions")
-            return
-
-        df = pd.DataFrame(columns=["date", "portfolio_value_pln"])
-        portfolio_value_pln = 0
-        for transaction in transactions:
-            portfolio_value_pln += transaction.value * transaction.rate
-            df = df.append({"date": transaction.date, "portfolio_value_pln": portfolio_value_pln}, ignore_index=True)
-
-        df.set_index(["date"], inplace=True)
-        df.plot()
-        plt.grid()
-        plt.xlabel("date")
-        plt.xticks(rotation=55)
-        plt.ylabel("value")
-        plt.title("Historical portfolio value")
-        plt.tight_layout()
-        plt.show()
-
-    def plot_profit(self, transactions, data_frame) -> None:
+    def _get_operations_df(self, transactions) -> DataFrame:
         assert transactions, "There are no transactions"
+
+        data_frame = self._get_historical_rates_df(transactions)
 
         transaction_rate = transactions[0].rate
         portfolio_value = transactions.pop(0).value
@@ -73,7 +44,30 @@ class Grapher:
         data_frame["value_pln_after_transaction"] = data_frame["portfolio_value"] * data_frame["transaction_rate"]
         data_frame["profit"] = (data_frame["value_pln_temp"] / data_frame["value_pln_after_transaction"] - 1) * 100
 
-        data_frame.plot(x="date", y="profit")
+        return data_frame
+
+    def plot_historical_rates(self, historical_rates=DataFrame) -> None:
+        historical_rates.plot(x="date", y="rate")
+        plt.grid()
+        plt.xlabel("date")
+        plt.xticks(rotation=45)
+        plt.ylabel("rate")
+        plt.title("Historical rates [PLN]")
+        plt.tight_layout()
+        plt.show()
+
+    def plot_portfolio_value_pln(self, operations=DataFrame) -> None:
+        operations.plot(x="date", y="value_pln_temp")
+        plt.grid()
+        plt.xlabel("date")
+        plt.xticks(rotation=55)
+        plt.ylabel("value")
+        plt.title("Historical portfolio value [PLN]")
+        plt.tight_layout()
+        plt.show()
+
+    def plot_profit(self, operations: DataFrame) -> None:
+        operations.plot(x="date", y="profit")
         plt.grid()
         plt.xlabel("date")
         plt.xticks(rotation=45)

@@ -7,19 +7,7 @@ Transaction = namedtuple("Transaction", ["date", "value", "rate"])
 
 class Wallet:
     def __init__(self) -> None:
-        self.transactions = [
-            Transaction(date="2020-09-08", value=1000, rate=4.48),
-            Transaction(date="2020-10-05", value=200, rate=4.49),
-            Transaction(date="2020-11-02", value=-500, rate=4.63),
-            Transaction(date="2020-12-14", value=200, rate=4.42),
-            Transaction(date="2021-01-25", value=100, rate=4.48),
-            Transaction(date="2021-02-15", value=-500, rate=4.53),
-            Transaction(date="2021-03-09", value=-100, rate=4.57),
-            Transaction(date="2021-04-20", value=-100, rate=4.54),
-            Transaction(date="2021-05-11", value=200, rate=4.48),
-            Transaction(date="2021-06-22", value=100, rate=4.45),
-            Transaction(date="2021-07-07", value=500, rate=4.50),
-        ]
+        self.transactions = []
         self.exchange_rate_requester = ExchangeRateRequester()
 
     def show_transactions(self) -> None:
