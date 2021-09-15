@@ -44,7 +44,7 @@ class ExchangeRateRequester:
         todays_bid = self.extract_todays_bid(rest_response)
         return todays_bid
 
-    def get_historical_bids(self, start_date, end_date=str(datetime.date.today())) -> T.Dict[str, float]:
+    def get_historical_bids(self, start_date: str, end_date=str(datetime.date.today())) -> T.Dict[str, float]:
         rest_response = self.get_rate(start_date=start_date, end_date=end_date)
         historocal_bids = self.extract_historical_bids(rest_response)
         return historocal_bids
