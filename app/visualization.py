@@ -59,14 +59,32 @@ class Grapher:
             operations_df.loc[operations_df["date"] == transaction.date, "transaction[+/-]"] = transaction.value
             operations_df.loc[operations_df["date"] == transaction.date, "transaction_rate"] = transaction.rate
 
-        operations_df["transaction_rate"] = operations_df["transaction_rate"].apply(
-            lambda row: row["transaction[+/-]"] + row["portfolio_value"].shift(1), axis=1
-        )
-        operations_df["portfolio_value"] = operations_df["portfolio_value"].apply(
-            lambda row: row["transaction_rate"].shift(1) if (row == 0) else row,  axis=1
+        operations_df["portfolio_value"] = operations_df["transaction[+/-]"].cumsum()
+        operations_df["transaction_rate"] = operations_df["transaction_rate"].mask(
+            operations_df["transaction_rate"] == 0,
+            operations_df["transaction_rate"].shift(1, fill_value=transactions[0].rate),
         )
 
-        operations_df["value_pln_temp"] = operations_df["portfolio_value"] * operations_df["rate"]
+        operations_df["value_pln_after_transaction"] = (
+            operations_df["portfolio_value"] * operations_df["transaction_rate"]
+        )
+        operations_df["profit"] = (
+            operations_df["value_pln_temp"] / operations_df["value_pln_after_transaction"] - 1
+        ) * 100
+        return operations_df
+
+    def _operations_df_without_for(self, transactions: list) -> pd.DataFrame:
+        assert transactions, "There are no transactions"
+
+        operations_df = self._historical_rates_df(transactions)
+        transactions_df = pd.DataFrame(transactions, columns=["date", "transaction[+/-]", "transaction_rate"])
+        operations_df = pd.merge(operations_df, transactions_df, on="date", how="outer").fillna(0)
+
+        operations_df["portfolio_value"] = operations_df["transaction[+/-]"].cumsum()
+        operations_df["transaction_rate"] = operations_df["transaction_rate"].mask(
+            operations_df["transaction_rate"] == 0,
+            operations_df["transaction_rate"].shift(1, fill_value=transactions[0].rate),
+        )
 
         operations_df["value_pln_after_transaction"] = (
             operations_df["portfolio_value"] * operations_df["transaction_rate"]
