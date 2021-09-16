@@ -40,8 +40,40 @@ class Grapher:
                 operations_df.at[i, ["portfolio_value"]] = portfolio_value
 
         operations_df["value_pln_temp"] = operations_df["portfolio_value"] * operations_df["rate"]
-        operations_df["value_pln_after_transaction"] = operations_df["portfolio_value"] * operations_df["transaction_rate"]
-        operations_df["profit"] = (operations_df["value_pln_temp"] / operations_df["value_pln_after_transaction"] - 1) * 100
+        operations_df["value_pln_after_transaction"] = (
+            operations_df["portfolio_value"] * operations_df["transaction_rate"]
+        )
+        operations_df["profit"] = (
+            operations_df["value_pln_temp"] / operations_df["value_pln_after_transaction"] - 1
+        ) * 100
+        return operations_df
+
+    def _operations_df_smaller_list(self, transactions: list) -> pd.DataFrame:
+        assert transactions, "There are no transactions"
+
+        operations_df = self._historical_rates_df(transactions)
+        operations_df["transaction[+/-]"] = 0
+        operations_df["transaction_rate"] = 0
+
+        for transaction in transactions:
+            operations_df.loc[operations_df["date"] == transaction.date, "transaction[+/-]"] = transaction.value
+            operations_df.loc[operations_df["date"] == transaction.date, "transaction_rate"] = transaction.rate
+
+        operations_df["transaction_rate"] = operations_df["transaction_rate"].apply(
+            lambda row: row["transaction[+/-]"] + row["portfolio_value"].shift(1), axis=1
+        )
+        operations_df["portfolio_value"] = operations_df["portfolio_value"].apply(
+            lambda row: row["transaction_rate"].shift(1) if (row == 0) else row,  axis=1
+        )
+
+        operations_df["value_pln_temp"] = operations_df["portfolio_value"] * operations_df["rate"]
+
+        operations_df["value_pln_after_transaction"] = (
+            operations_df["portfolio_value"] * operations_df["transaction_rate"]
+        )
+        operations_df["profit"] = (
+            operations_df["value_pln_temp"] / operations_df["value_pln_after_transaction"] - 1
+        ) * 100
         return operations_df
 
     def plot_historical_rates(self, historical_rates: pd.DataFrame) -> None:
