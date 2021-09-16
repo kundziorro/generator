@@ -1,4 +1,4 @@
-from requester import ExchangeRateRequester
+from app.requester import ExchangeRateRequester
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -64,7 +64,7 @@ class Grapher:
             operations_df["transaction_rate"] == 0,
             operations_df["transaction_rate"].shift(1, fill_value=transactions[0].rate),
         )
-
+        operations_df["value_pln_temp"] = operations_df["portfolio_value"] * operations_df["rate"]
         operations_df["value_pln_after_transaction"] = (
             operations_df["portfolio_value"] * operations_df["transaction_rate"]
         )
@@ -78,14 +78,13 @@ class Grapher:
 
         operations_df = self._historical_rates_df(transactions)
         transactions_df = pd.DataFrame(transactions, columns=["date", "transaction[+/-]", "transaction_rate"])
-        operations_df = pd.merge(operations_df, transactions_df, on="date", how="outer").fillna(0)
+        operations_df = pd.merge(operations_df, transactions_df, on="date", how="outer")
 
+        operations_df["transaction[+/-]"] = operations_df["transaction[+/-]"].fillna(0)
         operations_df["portfolio_value"] = operations_df["transaction[+/-]"].cumsum()
-        operations_df["transaction_rate"] = operations_df["transaction_rate"].mask(
-            operations_df["transaction_rate"] == 0,
-            operations_df["transaction_rate"].shift(1, fill_value=transactions[0].rate),
-        )
+        operations_df["transaction_rate"] = operations_df["transaction_rate"].fillna(method="backfill")
 
+        operations_df["value_pln_temp"] = operations_df["portfolio_value"] * operations_df["rate"]
         operations_df["value_pln_after_transaction"] = (
             operations_df["portfolio_value"] * operations_df["transaction_rate"]
         )

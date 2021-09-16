@@ -1,5 +1,5 @@
 from collections import namedtuple
-from requester import ExchangeRateRequester
+from app.requester import ExchangeRateRequester
 
 Transaction = namedtuple("Transaction", ["date", "value", "rate"])
 
