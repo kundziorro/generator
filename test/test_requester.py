@@ -1,8 +1,8 @@
-from app import requester
+from app.requester import ExchangeRateRequester
 
 
 def test_extract_todays_bid():
-    exchange_rate_requester = requester.ExchangeRateRequester()
+    exchange_rate_requester = ExchangeRateRequester()
     rest_response = {
         "table": "C",
         "currency": "euro",
@@ -15,7 +15,7 @@ def test_extract_todays_bid():
 
 
 def test_extract_historical_bids():
-    exchange_rate_requester = requester.ExchangeRateRequester()
+    exchange_rate_requester = ExchangeRateRequester()
     rest_response = {
         "table": "C",
         "currency": "euro",
@@ -27,4 +27,4 @@ def test_extract_historical_bids():
     }
     result = exchange_rate_requester.extract_historical_bids(rest_response)
 
-    assert result == [4.48, 4.51]
+    assert result == {'2021-09-07': 4.48, '2021-09-06': 4.51}
