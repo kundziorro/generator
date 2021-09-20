@@ -1,6 +1,6 @@
 import datetime
-import requests
 import json
+import requests
 import typing as T
 
 
@@ -22,18 +22,17 @@ class ExchangeRateRequester:
         return data
 
     @staticmethod
-    def extract_todays_bid(rest_response) -> float:
+    def extract_todays_bid(rest_response: dict) -> float:
         todays_rates = rest_response["rates"][0]
         todays_bid = todays_rates["bid"]
         return todays_bid
 
     @staticmethod
-    def extract_historical_bids(rest_response) -> T.Dict[str, float]:
+    def extract_historical_bids(rest_response: dict) -> T.Dict[str, float]:
         historical_rates = rest_response["rates"]
 
         historical_bids = {}
         for rate in historical_rates:
-            # historical_date = historical_rates[rate]
             historical_rate = rate["bid"]
             historical_date = rate["effectiveDate"]
             historical_bids[historical_date] = historical_rate
@@ -44,7 +43,7 @@ class ExchangeRateRequester:
         todays_bid = self.extract_todays_bid(rest_response)
         return todays_bid
 
-    def get_historical_bids(self, start_date: str, end_date=str(datetime.date.today())) -> T.Dict[str, float]:
+    def get_historical_bids(self, start_date: str, end_date: str = str(datetime.date.today())) -> T.Dict[str, float]:
         rest_response = self.get_rate(start_date=start_date, end_date=end_date)
         historocal_bids = self.extract_historical_bids(rest_response)
         return historocal_bids

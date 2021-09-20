@@ -1,6 +1,7 @@
-from app.wallet import Transaction
-from app.visualization import Grapher
 import pandas as pd
+
+from app.visualization import Grapher
+from app.wallet import Transaction
 
 
 def test_create_historical_rates_df(mocker):
