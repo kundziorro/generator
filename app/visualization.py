@@ -18,7 +18,7 @@ class Grapher:
         return historical_rates_df
 
     @staticmethod
-    def extract_create_operations_df(operations_df: pd.DataFrame) -> pd.DataFrame:
+    def run_calculations(operations_df: pd.DataFrame) -> pd.DataFrame:
         operations_df["transaction[+/-]"] = operations_df["transaction[+/-]"].fillna(0)
         operations_df["portfolio_value"] = operations_df["transaction[+/-]"].cumsum()
         operations_df["transaction_rate"] = operations_df["transaction_rate"].fillna(method="backfill")
@@ -39,7 +39,7 @@ class Grapher:
         operations_df = self._create_historical_rates_df(transactions)
         transactions_df = pd.DataFrame(transactions, columns=["date", "transaction[+/-]", "transaction_rate"])
         operations_df = pd.merge(operations_df, transactions_df, on="date", how="outer")
-        calculated_operations_df = self.extract_create_operations_df(operations_df)
+        calculated_operations_df = self.run_calculations(operations_df)
 
         return calculated_operations_df
 
